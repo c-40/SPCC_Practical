@@ -66,6 +66,12 @@ int main() {
     char string[64];
     scanf("%s", string); // Read input from the user
     input = string;
+     puts("Grammar Rules:");
+    puts("E -> T E'");
+    puts("E' -> + T E' | $");
+    puts("T -> F T'");
+    puts("T' -> * F T' | $");
+    puts("F -> ( E ) | i");
 
     puts("Input         Action");
     puts("--------------------------------");
