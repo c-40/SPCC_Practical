@@ -17,6 +17,7 @@ class Parser:
 
     def match(self, expected_char):
         if self.current_index < len(self.input_string) and self.input_string[self.current_index] == expected_char:
+            print(f"{self.input_string[self.current_index:]}\t\t\tMatched {expected_char}")
             self.current_index += 1
         else:
             raise ValueError
@@ -28,17 +29,24 @@ class Parser:
         self.match('d')
 
     def A(self):
+        # Attempt to match 'ab'
         if self.input_string[self.current_index:self.current_index+2] == 'ab':
             print(f"{self.input_string[self.current_index:]}\t\t\tA -> ab")
             self.match('a')
             self.match('b')
-        elif self.input_string[self.current_index] == 'a':
+        else:
+            print('used A->ab , no match backtrack ')
+            print("Backtracking")
+        # If 'ab' is not matched, try matching 'a'
+        if self.input_string[self.current_index] == 'a':
             print(f"{self.input_string[self.current_index:]}\t\t\tA -> a")
             self.match('a')
         else:
+            # If neither 'ab' nor 'a' is matched, backtrack
+            print(f"{self.input_string[self.current_index:]}\t\t\tBacktrack from A")
             raise ValueError
 
 
-input_string = "cabd"
+input_string = "cad"
 parser = Parser(input_string)
 parser.parse()
