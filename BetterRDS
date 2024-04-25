@@ -1,0 +1,49 @@
+class Parser:
+    def __init__(self,input_string):
+        self.input_string=input_string
+        self.current_index=0
+
+    def parse(self):
+        print("RECURSIVE DECENT PARSER")
+        print("Action\t\t\tInput")
+        self.S()
+        if self.current_index==len(self.input_string):
+            print("Successful parsing")
+            self.current_index=self.current_index+1
+        else:
+            print("Unsuccessful Parsing")
+
+    def S(self):
+        print(f"{self.input_string[self.current_index:]}\t\t\tS->cA")
+        self.match('c')
+        self.A()
+        # self.match('d')
+
+    def A(self):
+        if self.input_string[self.current_index:self.current_index+2] == 'ad':
+            print(f"{self.input_string[self.current_index:]}\t\t\tA -> ad")
+            self.match('a')
+            self.match('d')
+        else:
+            print('No match A->ab\t\t Backtracking')
+        
+        if self.current_index < len(self.input_string) and self.input_string[self.current_index]=='a':
+            print(f"{self.input_string[self.current_index:]}\t\t\tA->a")
+            self.match('a')
+        if self.current_index < len(self.input_string):
+            self.S()
+        
+
+    def match(self,chara):
+        if chara==self.input_string[self.current_index]:
+            print(f"{self.input_string[self.current_index:]}\t\t\tMatched {chara}")
+            self.current_index += 1
+
+input_string='caad'
+parser=Parser(input_string)
+parser.parse()
+
+
+
+
+
