@@ -1,52 +1,42 @@
-class Parser:
-    def __init__(self, input_string):
-        self.input_string = input_string
-        self.current_index = 0
-
-    def parse(self):
+class Parsers():
+    def __init__(self,input_string):
+        self.input_string=input_string
+        self.current_index=0
+    def parser(self):
+        print('RDS')
         print("Input\t\t\tAction")
-        print("--------------------------------")
-        try:
-            self.S()
-            if self.current_index == len(self.input_string):
-                print("String is successfully parsed.")
-            else:
-                print("Parsing failed: Unexpected characters after parsing.")
-        except ValueError:
-            print("Parsing failed: Invalid syntax.")
-
-    def match(self, expected_char):
-        if self.current_index < len(self.input_string) and self.input_string[self.current_index] == expected_char:
-            print(f"{self.input_string[self.current_index:]}\t\t\tMatched {expected_char}")
-            self.current_index += 1
+        self.S()
+        if self.current_index==len(input_string):
+            print('Success')
         else:
-            raise ValueError
-
+            print('Unsuccessful')
+    def match(self,chara):
+        if chara==self.input_string[self.current_index]:
+            
+            print(f"{self.input_string[self.current_index:]}\t\t\tMatch {chara}")
+            self.current_index+=1
     def S(self):
-        print(f"{self.input_string[self.current_index:]}\t\t\tS -> cA")
+        print(f'{self.input_string[self.current_index:]}\t\t\tS->cA')
         self.match('c')
         self.A()
-        self.match('d')
-
     def A(self):
-        # Attempt to match 'ab'
-        if self.input_string[self.current_index:self.current_index+2] == 'ab':
-            print(f"{self.input_string[self.current_index:]}\t\t\tA -> ab")
+        if self.input_string[self.current_index:self.current_index+2]=='ad':
+            print(f'{self.input_string[self.current_index:]}\t\t\tA->ad')
             self.match('a')
-            self.match('b')
+            self.match('d')
+            
+
         else:
-            print('used A->ab , no match backtrack ')
-            print("Backtracking")
-        # If 'ab' is not matched, try matching 'a'
-        if self.input_string[self.current_index] == 'a':
-            print(f"{self.input_string[self.current_index:]}\t\t\tA -> a")
+            print(f'{self.input_string[self.current_index:]}\t\t\tBacktrack no match A->ad')
+
+        if self.current_index < len(self.input_string) and self.input_string[self.current_index] == 'a':
+
             self.match('a')
-        else:
-            # If neither 'ab' nor 'a' is matched, backtrack
-            print(f"{self.input_string[self.current_index:]}\t\t\tBacktrack from A")
-            raise ValueError
+            print(f'{self.input_string[self.current_index:]}\t\t\tA->a')
 
+        if self.current_index<len(self.input_string):
+            self.S()
+input_string=input("Enter string")
+parse=Parsers(input_string)
+parse.parser()
 
-input_string = "cad"
-parser = Parser(input_string)
-parser.parse()
